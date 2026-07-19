@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Transform playerVisual;
+
     [SerializeField] private Transform cameraTransform;
 
     [SerializeField] private float moveSpeed = 5f;
@@ -87,8 +89,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(movement);
 
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
+            playerVisual.rotation = Quaternion.Slerp(
+                playerVisual.rotation,
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
@@ -97,6 +99,6 @@ public class PlayerMovement : MonoBehaviour
         movement *= moveSpeed;  
         movement.y = verticalVelocity;
 
-        controller.Move(movement * moveSpeed * Time.deltaTime);
+        controller.Move(movement * Time.deltaTime);
     }
 }
