@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
 
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
 
@@ -75,9 +76,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 movement = cameraForward * moveInput.y + cameraRight * moveInput.x;
 
+
+
         if (movement.magnitude > 1f)
         {
             movement.Normalize();
+        }
+
+        if (movement.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(movement);
+
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                rotationSpeed * Time.deltaTime
+            );
         }
 
         movement *= moveSpeed;  
