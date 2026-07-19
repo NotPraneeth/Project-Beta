@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private Transform cameraTransform;
+
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -9.81f;
@@ -55,6 +57,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Update() {
+
+        Vector3 cameraForward = cameraTransform.forward;
+        cameraForward.y = 0f;
+        cameraForward.Normalize();
+
+        Vector3 cameraRight = cameraTransform.right;
+        cameraRight.y = 0f;
+        cameraRight.Normalize();
+
         if (controller.isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = -2f;
@@ -62,11 +73,7 @@ public class PlayerMovement : MonoBehaviour
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 movement = new Vector3(
-            moveInput.x,
-            0f,
-            moveInput.y
-        );
+        Vector3 movement = cameraForward * moveInput.y + cameraRight * moveInput.x;
 
         if (movement.magnitude > 1f)
         {
