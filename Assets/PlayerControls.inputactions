@@ -25,13 +25,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Look",
+                    "name": "MouseLook",
                     "type": "Value",
                     "id": "d4334493-25cb-4465-9c93-465b71eff854",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "72192cf0-48b5-476a-b148-b0e1ede3a185",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -163,7 +172,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "MouseLook",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34af7a41-cc4e-48aa-a6bd-45fce5324908",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
