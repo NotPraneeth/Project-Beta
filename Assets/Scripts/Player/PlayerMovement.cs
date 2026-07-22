@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -12,51 +12,30 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
 
     [Header("Sprint")]
-    [SerializeField] private float sprintSpeed = 1f;
-    [SerializeField] private bool isSprinting = false;
+    [SerializeField] private float sprintMultiplier = 1.5f;
 
     private CharacterController controller;
-    private PlayerControls controls;
+    private PlayerInputHandler input;
 
-    private Vector2 moveInput;
     private float verticalVelocity;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        controls = new PlayerControls();
-    }
-
-    private void OnEnable()
-    {
-        controls.Enable();
-
-        controls.Player.Move.performed += OnMove;
-        controls.Player.Move.canceled += OnMove;
-        controls.Player.Jump.performed += OnJump;
-        controls.Player.Sprint.performed += OnSprint;
-        controls.Player.Sprint.canceled += OnSprint;
-    }
-
-    private void OnDisable()
-    {
-        controls.Player.Move.performed -= OnMove;
-        controls.Player.Move.canceled -= OnMove;
-        controls.Player.Jump.performed -= OnJump;
-        controls.Player.Sprint.performed -= OnSprint;
-        controls.Player.Sprint.canceled -= OnSprint;
-
-        controls.Disable();
+        input = GetComponent<PlayerInputHandler>();
     }
 
     private void Update()
     {
         ApplyGravity();
+        HandleJump();
         Move();
     }
 
     private void Move()
     {
+        Vector2 moveInput = input.MoveInput;
+
         Vector3 moveDirection =
             transform.forward * moveInput.y +
             transform.right * moveInput.x;
@@ -64,14 +43,11 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection.sqrMagnitude > 1f)
             moveDirection.Normalize();
 
-        if(isSprinting)
-        {
-            moveDirection = moveDirection * moveSpeed * sprintSpeed;
-        }
-        else
-        {
-            moveDirection = moveDirection * moveSpeed;
-        }
+        float currentSpeed = input.IsSprinting
+            ? moveSpeed * sprintMultiplier
+            : moveSpeed;
+
+        moveDirection *= currentSpeed;
         moveDirection.y = verticalVelocity;
 
         controller.Move(moveDirection * Time.deltaTime);
@@ -87,21 +63,14 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity += gravity * Time.deltaTime;
     }
 
-    private void OnMove(InputAction.CallbackContext context)
+    private void HandleJump()
     {
-        moveInput = context.ReadValue<Vector2>();
-    }
+        if (!input.Jump.Consume())
+            return;
 
-    private void OnJump(InputAction.CallbackContext context)
-    {
         if (!controller.isGrounded)
             return;
 
         verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
-    }
-
-    private void OnSprint(InputAction.CallbackContext context)
-    {
-        isSprinting = context.ReadValueAsButton();
     }
 }
