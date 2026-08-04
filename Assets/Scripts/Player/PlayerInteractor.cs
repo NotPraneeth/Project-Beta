@@ -90,11 +90,11 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (!input.Interact.Consume())
             return;
-
+        
         currentInteractable?.Interact(this);
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         if (interactionPoint == null)
             return;
