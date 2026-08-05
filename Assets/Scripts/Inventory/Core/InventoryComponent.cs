@@ -1,6 +1,7 @@
 using Inventory.Data;
 using Inventory.UI;
 using UnityEngine;
+using Inventory.Events;
 
 namespace Inventory.Core
 {
@@ -23,6 +24,7 @@ namespace Inventory.Core
         private StaticItemData[] testItems;
 
         public InventorySlot[] Slots { get; private set; }
+        public InventoryEvents Events { get; } = new();
 
         private void Awake()
         {
@@ -68,10 +70,11 @@ namespace Inventory.Core
                     Random.Range(1, testItems[i].MaxStackSize + 1));
                 Debug.Log($"Added {item.ItemData.DisplayName} to slot {i}");
             }
-            InventoryUI inventoryUI = FindFirstObjectByType<InventoryUI>();
-
-            if (inventoryUI != null)
-                inventoryUI.Refresh();
+            NotifyInventoryChanged();
+        }
+        public void NotifyInventoryChanged()
+        {
+            Events.RaiseInventoryChanged();
         }
     }
 }

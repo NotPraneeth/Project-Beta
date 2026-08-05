@@ -1,24 +1,27 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+using Inventory.Data;
 
 namespace Inventory.UI
 {
-    /// <summary>
-    /// Responsibility:
-    /// Represents one inventory slot in the UI.
-    ///
-    /// InventorySlotUI only displays information and
-    /// forwards player input to InventoryUI.
-    /// It never modifies the inventory directly.
-    /// </summary>
-    public sealed class InventorySlotUI : MonoBehaviour
+    public sealed class InventorySlotUI :
+        MonoBehaviour,
+        IBeginDragHandler,
+        IDragHandler
     {
-        [SerializeField] private Image icon;
-        [SerializeField] private TMP_Text quantityText;
+        [SerializeField]
+        private Image icon;
+
+        [SerializeField]
+        private TMP_Text quantityText;
 
         private InventoryUI inventoryUI;
         private int slotIndex;
+
+        public int SlotIndex => slotIndex;
 
         public void Initialize(
             InventoryUI inventoryUI,
@@ -28,7 +31,7 @@ namespace Inventory.UI
             this.slotIndex = slotIndex;
         }
 
-        public void Refresh(Inventory.Data.InventorySlot slot)
+        public void Refresh(InventorySlot slot)
         {
             if (slot.IsEmpty)
             {
@@ -38,21 +41,19 @@ namespace Inventory.UI
             }
 
             icon.enabled = true;
-            icon.sprite = slot.ItemInstance.ItemData.Icon;  
+            icon.sprite = slot.ItemInstance.ItemData.Icon;
 
-            quantityText.gameObject.SetActive(slot.Quantity > 1);
             quantityText.text = slot.Quantity.ToString();
-            Debug.Log (quantityText.text);
+            quantityText.gameObject.SetActive(slot.Quantity > 1);
         }
 
-        /// <summary>
-        /// Called by the Button component.
-        /// </summary>
-        public void OnClick()
+        public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log($"Clicked slot {slotIndex}");
+            inventoryUI.BeginDrag(slotIndex);
+        }
 
-            inventoryUI.OnSlotClicked(slotIndex);
+        public void OnDrag(PointerEventData eventData)
+        {
         }
     }
 }

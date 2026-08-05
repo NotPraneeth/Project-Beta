@@ -1,6 +1,6 @@
 using Inventory.Core;
 using Inventory.Data;
-
+using UnityEngine;
 namespace Inventory.Managers
 {
     /// <summary>
@@ -18,6 +18,7 @@ namespace Inventory.Managers
     InventoryComponent toInventory,
     int toSlot)
         {
+            Debug.Log("Move() called");
             // Validate inventories.
             if (fromInventory == null || toInventory == null)
                 return false;
@@ -36,17 +37,18 @@ namespace Inventory.Managers
             if (source.IsEmpty)
                 return false;
 
+            bool inventoryChanged = false;
+
             // Destination is empty -> Move.
             if (destination.IsEmpty)
             {
                 destination.Set(source.ItemInstance, source.Quantity);
                 source.Clear();
 
-                return true;
+                inventoryChanged = true;
             }
-
             // Destination contains an item.
-            if (source.ItemInstance.CanStackWith(destination.ItemInstance))
+            else if (source.ItemInstance.CanStackWith(destination.ItemInstance))
             {
                 int maxStack = source.ItemInstance.ItemData.MaxStackSize;
                 int totalItems = source.Quantity + destination.Quantity;
@@ -64,20 +66,32 @@ namespace Inventory.Managers
                     source.Quantity = totalItems - maxStack;
                 }
 
-                return true;
+                inventoryChanged = true;
+            }
+            // Swap.
+            else
+            {
+                ItemInstance tempItem = destination.ItemInstance;
+                int tempQuantity = destination.Quantity;
+
+                destination.Set(source.ItemInstance, source.Quantity);
+                source.Set(tempItem, tempQuantity);
+
+                inventoryChanged = true;
             }
 
-            //swaps if no other option
+            if (inventoryChanged)
+            {
+                fromInventory.NotifyInventoryChanged();
 
-            ItemInstance tempItem = destination.ItemInstance;
-            int tempQuantity = destination.Quantity;
+                // Avoid firing twice when moving within the same inventory.
+                if (fromInventory != toInventory)
+                {
+                    toInventory.NotifyInventoryChanged();
+                }
+            }
 
-            destination.Set(source.ItemInstance, source.Quantity);
-
-            source.Set(tempItem, tempQuantity);
-
-            return true;
-
+            return inventoryChanged;
         }
     }
 }
