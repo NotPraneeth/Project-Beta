@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandler))]
@@ -9,6 +10,9 @@ public class PlayerInteractor : MonoBehaviour
 
     [SerializeField] private Transform interactionPoint;
     [SerializeField] private LayerMask interactableLayer;
+
+    [Header("References")]
+    [SerializeField] private GameUIManager gameUIManager;
 
     private readonly RaycastHit[] hits = new RaycastHit[10];
 
@@ -90,7 +94,14 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (!input.Interact.Consume())
             return;
-        
+
+        // If storage is already open, pressing E closes it.
+        if (gameUIManager.CurrentMode == UIMode.Storage)
+        {
+            gameUIManager.HideStorage();
+            return;
+        }
+
         currentInteractable?.Interact(this);
     }
 
@@ -113,8 +124,7 @@ public class PlayerInteractor : MonoBehaviour
 
         Gizmos.DrawLine(
             interactionPoint.position,
-            interactionPoint.position + interactionPoint.forward * interactionDistance
+            interactionPoint.position + interactionDistance * interactionPoint.forward
         );
     }
 }
-
