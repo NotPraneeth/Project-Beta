@@ -20,6 +20,7 @@ namespace Inventory.UI
 
         private InventoryComponent sourceInventory;
         private int sourceSlot;
+        private int quantityToMove;
 
         private bool isDragging;
 
@@ -35,6 +36,17 @@ namespace Inventory.UI
                 return;
 
             transform.position = Mouse.current.position.ReadValue();
+
+            float scroll = Mouse.current.scroll.ReadValue().y;
+
+            if (scroll > 0)
+            {
+                IncreaseQuantity();
+            }
+            else if (scroll < 0)
+            {
+                DecreaseQuantity();
+            }
 
             if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
@@ -57,8 +69,9 @@ namespace Inventory.UI
             icon.sprite = slot.ItemInstance.ItemData.Icon;
             icon.enabled = true;
 
-            quantityText.text = slot.Quantity.ToString();
-            quantityText.gameObject.SetActive(slot.Quantity > 1);
+            quantityToMove = slot.Quantity;
+
+            UpdateDragUI();
 
             isDragging = true;
         }
@@ -74,19 +87,13 @@ namespace Inventory.UI
 
             EventSystem.current.RaycastAll(pointer, hits);
 
-            Debug.Log($"Raycast Hits: {hits.Count}");
-
             foreach (RaycastResult hit in hits)
             {
-                Debug.Log(hit.gameObject.name);
-
                 InventorySlotUI slot =
                     hit.gameObject.GetComponentInParent<InventorySlotUI>();
 
                 if (slot == null)
                     continue;
-
-                Debug.Log($"Found Slot {slot.SlotIndex}");
 
                 InventoryUI inventoryUI =
                     slot.GetComponentInParent<InventoryUI>();
@@ -95,7 +102,8 @@ namespace Inventory.UI
                     sourceInventory,
                     sourceSlot,
                     inventoryUI.Inventory,
-                    slot.SlotIndex);
+                    slot.SlotIndex,
+                    quantityToMove);
 
                 break;
             }
@@ -109,9 +117,39 @@ namespace Inventory.UI
 
             sourceInventory = null;
             sourceSlot = -1;
+            quantityToMove = 0;
 
             icon.enabled = false;
             quantityText.gameObject.SetActive(false);
+        }
+
+        private void UpdateDragUI()
+        {
+            quantityText.text = quantityToMove.ToString();
+            quantityText.gameObject.SetActive(quantityToMove > 1);
+        }
+
+        private void IncreaseQuantity()
+        {
+            Inventory.Data.InventorySlot slot =
+                sourceInventory.Slots[sourceSlot];
+
+            if (quantityToMove >= slot.Quantity)
+                return;
+
+            quantityToMove++;
+
+            UpdateDragUI();
+        }
+
+        private void DecreaseQuantity()
+        {
+            if (quantityToMove <= 1)
+                return;
+
+            quantityToMove--;
+
+            UpdateDragUI();
         }
     }
 }

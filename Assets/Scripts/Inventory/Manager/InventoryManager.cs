@@ -1,6 +1,7 @@
 using Inventory.Core;
 using Inventory.Data;
 using UnityEngine;
+
 namespace Inventory.Managers
 {
     /// <summary>
@@ -12,13 +13,42 @@ namespace Inventory.Managers
     /// </summary>
     public static class InventoryManager
     {
+        /// <summary>
+        /// Moves the entire stack.
+        /// </summary>
         public static bool Move(
-    InventoryComponent fromInventory,
-    int fromSlot,
-    InventoryComponent toInventory,
-    int toSlot)
+            InventoryComponent fromInventory,
+            int fromSlot,
+            InventoryComponent toInventory,
+            int toSlot)
         {
-            Debug.Log("Move() called");
+            // Validate inventories.
+            if (fromInventory == null || toInventory == null)
+                return false;
+
+            if (fromSlot < 0 || fromSlot >= fromInventory.Slots.Length)
+                return false;
+
+            InventorySlot source = fromInventory.Slots[fromSlot];
+
+            return Move(
+                fromInventory,
+                fromSlot,
+                toInventory,
+                toSlot,
+                source.Quantity);
+        }
+
+        /// <summary>
+        /// Moves only the specified quantity.
+        /// </summary>
+        public static bool Move(
+            InventoryComponent fromInventory,
+            int fromSlot,
+            InventoryComponent toInventory,
+            int toSlot,
+            int quantity)
+        {
             // Validate inventories.
             if (fromInventory == null || toInventory == null)
                 return false;
@@ -37,40 +67,65 @@ namespace Inventory.Managers
             if (source.IsEmpty)
                 return false;
 
+            // Clamp quantity.
+            quantity = Mathf.Clamp(quantity, 1, source.Quantity);
+
             bool inventoryChanged = false;
 
-            // Destination is empty -> Move.
+            // -------------------------------------------------
+            // Destination is empty.
+            // -------------------------------------------------
             if (destination.IsEmpty)
             {
-                destination.Set(source.ItemInstance, source.Quantity);
-                source.Clear();
+                destination.Set(source.ItemInstance, quantity);
+
+                source.Quantity -= quantity;
+
+                if (source.Quantity == 0)
+                {
+                    source.Clear();
+                }
 
                 inventoryChanged = true;
             }
-            // Destination contains an item.
+
+            // -------------------------------------------------
+            // Merge.
+            // -------------------------------------------------
             else if (source.ItemInstance.CanStackWith(destination.ItemInstance))
             {
                 int maxStack = source.ItemInstance.ItemData.MaxStackSize;
-                int totalItems = source.Quantity + destination.Quantity;
 
-                // Entire stack fits.
-                if (totalItems <= maxStack)
-                {
-                    destination.Quantity = totalItems;
-                    source.Clear();
-                }
-                // Destination fills up, source keeps the remainder.
-                else
-                {
-                    destination.Quantity = maxStack;
-                    source.Quantity = totalItems - maxStack;
-                }
+                int spaceAvailable =
+                    maxStack - destination.Quantity;
 
-                inventoryChanged = true;
+                if (spaceAvailable > 0)
+                {
+                    int amountToMove =
+                        Mathf.Min(quantity, spaceAvailable);
+
+                    destination.Quantity += amountToMove;
+
+                    source.Quantity -= amountToMove;
+
+                    if (source.Quantity == 0)
+                    {
+                        source.Clear();
+                    }
+
+                    inventoryChanged = true;
+                }
             }
+
+            // -------------------------------------------------
             // Swap.
+            // -------------------------------------------------
             else
             {
+                // Partial stacks cannot be swapped.
+                if (quantity != source.Quantity)
+                    return false;
+
                 ItemInstance tempItem = destination.ItemInstance;
                 int tempQuantity = destination.Quantity;
 
