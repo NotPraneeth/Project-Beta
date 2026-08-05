@@ -98,6 +98,14 @@ namespace Inventory.UI
                 InventoryUI inventoryUI =
                     slot.GetComponentInParent<InventoryUI>();
 
+                Debug.Log($"Slot: {slot.name}");
+                Debug.Log($"InventoryUI: {inventoryUI}");
+
+                if (inventoryUI != null)
+                {
+                    Debug.Log($"Inventory: {inventoryUI.Inventory}");
+                }
+
                 InventoryManager.Move(
                     sourceInventory,
                     sourceSlot,

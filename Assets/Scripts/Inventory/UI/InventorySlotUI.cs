@@ -8,9 +8,10 @@ using Inventory.Data;
 namespace Inventory.UI
 {
     public sealed class InventorySlotUI :
-        MonoBehaviour,
-        IBeginDragHandler,
-        IDragHandler
+     MonoBehaviour,
+     IPointerDownHandler,
+     IBeginDragHandler,
+     IDragHandler
     {
         [SerializeField]
         private Image icon;
@@ -47,13 +48,23 @@ namespace Inventory.UI
             quantityText.gameObject.SetActive(slot.Quantity > 1);
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            inventoryUI.BeginDrag(slotIndex);
-        }
+        //public void OnBeginDrag(PointerEventData eventData)
+        //{
+        //    inventoryUI.BeginDrag(slotIndex);
+        //}
 
         public void OnDrag(PointerEventData eventData)
         {
+        }
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            Debug.Log("Pointer Down");
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            Debug.Log("Begin Drag");
+            inventoryUI.BeginDrag(slotIndex);
         }
     }
 }
