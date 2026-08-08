@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8965035297878445249
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      propertyPath: m_Name
+      value: SM_Bld_Parking_Wall_Corner_Small_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4428998164497466992}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1996317964313267533}
+  m_SourcePrefab: {fileID: 100100000, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+--- !u!1 &8118685880479068560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 176fc9e4ab6eebd49a3deb33eba0d3d9, type: 3}
+  m_PrefabInstance: {fileID: 8965035297878445249}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4428998164497466992
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8118685880479068560}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.734777, y: 5.00541, z: 0.23120078}
+  m_Center: {x: -3.9847758, y: 2.502705, z: 0.0017875917}
+--- !u!65 &1996317964313267533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8118685880479068560}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2159934, y: 5.00541, z: 2.734776}
+  m_Center: {x: -5.2441673, y: 2.502705, z: -1.2500002}

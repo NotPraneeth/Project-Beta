@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2192629721028294075
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      propertyPath: m_Name
+      value: SM_Bld_Base_Floor_Double_01_07
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 5215029996543897384, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    - {fileID: 4235308819698547265, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    - {fileID: -6902704875942902260, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    - {fileID: 2953049830361091353, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    - {fileID: -2812838422824552747, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    - {fileID: 5277048559858454804, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8253574075002368226, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2292640319129036321}
+  m_SourcePrefab: {fileID: 100100000, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+--- !u!1 &1376028934772538021 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8253574075002368226, guid: 2ccb94f6c71a491498e09949a0d750d5, type: 3}
+  m_PrefabInstance: {fileID: 2192629721028294075}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2292640319129036321
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376028934772538021}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6855655011608197865, guid: a515668971028ee41990144af0f09976, type: 3}
