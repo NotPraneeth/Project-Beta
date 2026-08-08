@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2043895272852175968
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      propertyPath: m_Name
+      value: SM_Bld_PoliceStation_Base_Wall_Prison_AutomaticDoor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -8346073491556849377, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5619068295988592580}
+    - targetCorrespondingSourceObject: {fileID: 1712984077675569699, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 219080883787855974}
+  m_SourcePrefab: {fileID: 100100000, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+--- !u!1 &835666335122103875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1712984077675569699, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+  m_PrefabInstance: {fileID: 2043895272852175968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &219080883787855974
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835666335122103875}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.6648846, y: 3.503572, z: 0.083107926}
+  m_Center: {x: -0.83244133, y: 1.751786, z: -0.041553956}
+--- !u!1 &1184892601376380287 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8346073491556849377, guid: e4907fb8ca888b041b55081618bbd67e, type: 3}
+  m_PrefabInstance: {fileID: 2043895272852175968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &5619068295988592580
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184892601376380287}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4103988704373944597, guid: 0cea450ea0292ca4986ee0976a6c77c4, type: 3}
