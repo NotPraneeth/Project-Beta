@@ -1,130 +1,154 @@
 using UI;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputHandler))]
-public class PlayerInteractor : MonoBehaviour
+namespace Player
 {
-    [Header("Settings")]
-    [SerializeField] private float interactionDistance = 3f;
-    [SerializeField] private float interactionRadius = 0.5f;
-
-    [SerializeField] private Transform interactionPoint;
-    [SerializeField] private LayerMask interactableLayer;
-
-    [Header("References")]
-    [SerializeField] private GameUIManager gameUIManager;
-
-    private readonly RaycastHit[] hits = new RaycastHit[10];
-
-    private PlayerInputHandler input;
-
-    private IInteractable currentInteractable;
-
-    private void Awake()
+    [RequireComponent(typeof(PlayerInputHandler))]
+    public class PlayerInteractor : MonoBehaviour
     {
-        input = GetComponent<PlayerInputHandler>();
-    }
+        [Header("Settings")]
+        [SerializeField] private float interactionDistance = 3f;
+        [SerializeField] private float interactionRadius = 0.5f;
 
-    private void Update()
-    {
-        FindInteractable();
-        HandleInteraction();
-    }
+        [SerializeField] private Transform interactionPoint;
+        [SerializeField] private LayerMask interactableLayer;
 
-    private void FindInteractable()
-    {
-        currentInteractable = null;
+        [Header("References")]
+        [SerializeField] private GameUIManager gameUIManager;
 
-        int hitCount = Physics.SphereCastNonAlloc(
-            interactionPoint.position,
-            interactionRadius,
-            interactionPoint.forward,
-            hits,
-            interactionDistance,
-            interactableLayer
-        );
+        private readonly RaycastHit[] hits = new RaycastHit[10];
 
-        if (hitCount == 0)
-            return;
+        private PlayerInputHandler input;
 
-        currentInteractable = GetBestInteractable(hitCount);
-    }
+        private IInteractable currentInteractable;
 
-    private IInteractable GetBestInteractable(int hitCount)
-    {
-        IInteractable bestInteractable = null;
-        float bestScore = float.MaxValue;
+        private float lastDebugLogTime;
 
-        for (int i = 0; i < hitCount; i++)
+        private void Awake()
         {
-            IInteractable interactable =
-                hits[i].collider.GetComponent<IInteractable>();
+            input = GetComponent<PlayerInputHandler>();
+        }
 
-            if (interactable == null)
-                continue;
+        private void Update()
+        {
+            FindInteractable();
+            HandleInteraction();
+        }
 
-            float distance =
-                Vector3.Distance(
-                    interactionPoint.position,
-                    hits[i].point
-                );
+        private void FindInteractable()
+        {
+            currentInteractable = null;
 
-            Vector3 direction =
-                (hits[i].point - interactionPoint.position).normalized;
+            int hitCount = Physics.SphereCastNonAlloc(
+                interactionPoint.position,
+                interactionRadius,
+                interactionPoint.forward,
+                hits,
+                interactionDistance,
+                interactableLayer
+            );
 
-            float angle =
-                Vector3.Angle(
-                    interactionPoint.forward,
-                    direction
-                );
-
-            float score = distance + (angle * 2f);
-
-            if (score < bestScore)
+            bool shouldLog = Time.time - lastDebugLogTime >= 1f;
+            if (shouldLog)
             {
-                bestScore = score;
-                bestInteractable = interactable;
+                lastDebugLogTime = Time.time;
+
+                Debug.Log($"[PlayerInteractor] sphere cast hit {hitCount} collider(s) on the interactable layer.");
+                for (int i = 0; i < hitCount; i++)
+                {
+                    Debug.Log($"[PlayerInteractor]   hit: {hits[i].collider.gameObject.name} (layer: {LayerMask.LayerToName(hits[i].collider.gameObject.layer)})");
+                }
+            }
+
+            if (hitCount == 0)
+                return;
+
+            currentInteractable = GetBestInteractable(hitCount);
+
+            if (shouldLog)
+            {
+                Debug.Log($"[PlayerInteractor] best interactable this frame: {(currentInteractable == null ? "none" : ((MonoBehaviour)currentInteractable).gameObject.name)}");
             }
         }
 
-        return bestInteractable;
-    }
-
-    private void HandleInteraction()
-    {
-        if (!input.Interact.Consume())
-            return;
-
-        // If storage is already open, pressing E closes it.
-        if (gameUIManager.CurrentMode == UIMode.Storage)
+        private IInteractable GetBestInteractable(int hitCount)
         {
-            gameUIManager.HideStorage();
-            return;
+            IInteractable bestInteractable = null;
+            float bestScore = float.MaxValue;
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                IInteractable interactable =
+                    hits[i].collider.GetComponent<IInteractable>();
+
+                if (interactable == null)
+                    continue;
+
+                float distance =
+                    Vector3.Distance(
+                        interactionPoint.position,
+                        hits[i].point
+                    );
+
+                Vector3 direction =
+                    (hits[i].point - interactionPoint.position).normalized;
+
+                float angle =
+                    Vector3.Angle(
+                        interactionPoint.forward,
+                        direction
+                    );
+
+                float score = distance + (angle * 2f);
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestInteractable = interactable;
+                }
+            }
+
+            return bestInteractable;
         }
 
-        currentInteractable?.Interact(this);
-    }
+        private void HandleInteraction()
+        {
+            if (!input.Interact.Consume())
+                return;
 
-    private void OnDrawGizmos()
-    {
-        if (interactionPoint == null)
-            return;
+            Debug.Log($"[PlayerInteractor] E pressed. currentInteractable = {(currentInteractable == null ? "null" : ((MonoBehaviour)currentInteractable).gameObject.name)}");
 
-        Gizmos.color = Color.green;
+            // If storage is already open, pressing E closes it.
+            if (gameUIManager != null && gameUIManager.CurrentMode == UIMode.Storage)
+            {
+                gameUIManager.HideStorage();
+                return;
+            }
 
-        Gizmos.DrawWireSphere(
-            interactionPoint.position,
-            interactionRadius
-        );
+            currentInteractable?.Interact(this);
+        }
 
-        Gizmos.DrawWireSphere(
-            interactionPoint.position + interactionPoint.forward * interactionDistance,
-            interactionRadius
-        );
+        private void OnDrawGizmos()
+        {
+            if (interactionPoint == null)
+                return;
 
-        Gizmos.DrawLine(
-            interactionPoint.position,
-            interactionPoint.position + interactionDistance * interactionPoint.forward
-        );
+            Gizmos.color = Color.green;
+
+            Gizmos.DrawWireSphere(
+                interactionPoint.position,
+                interactionRadius
+            );
+
+            Gizmos.DrawWireSphere(
+                interactionPoint.position + interactionPoint.forward * interactionDistance,
+                interactionRadius
+            );
+
+            Gizmos.DrawLine(
+                interactionPoint.position,
+                interactionPoint.position + interactionDistance * interactionPoint.forward
+            );
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Inventory.Core;
+using Player;
 using UI;
 using UnityEngine;
 
